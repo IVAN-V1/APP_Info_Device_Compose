@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">memoryAdd</string>
+    <string name="memory_text">Memoria en uso</string>
+    <string name="stadistics_text">Estadisticas</string>
+</resources>
