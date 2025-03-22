@@ -3,7 +3,7 @@
 
 This is a small application that gives technical information about the device.
 
-# Capturas
+# captures
 
 | screen 1 | screen 2 |  
 | -------- | -------- |
