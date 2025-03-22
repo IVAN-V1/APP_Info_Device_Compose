@@ -15,6 +15,6 @@ val white =Color(0xFFFFFAFA)
 
 val background_dark = Color(0xFF1A1818)
 
-val background_light = Color(0xFFFFFBFE)
+val background_light = Color(0xFFFDF4FB)
 
 

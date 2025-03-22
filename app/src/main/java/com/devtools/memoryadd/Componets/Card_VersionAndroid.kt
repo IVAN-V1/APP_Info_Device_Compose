@@ -78,7 +78,7 @@ fun Card_versionAndroid(title: String, date: String,image: Int) {
 
                                 Text(
                                     text = date,
-                                    style = MaterialTheme.typography.titleLarge,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.secondary
 
                                 )

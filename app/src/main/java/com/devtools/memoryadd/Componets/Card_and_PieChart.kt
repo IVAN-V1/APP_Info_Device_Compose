@@ -28,18 +28,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devtools.memoryadd.R
 import com.devtools.memoryadd.ui.theme.MemoryAddTheme
 import ir.ehsannarmani.compose_charts.PieChart
 import ir.ehsannarmani.compose_charts.models.Pie
+import kotlinx.coroutines.delay
+import kotlin.math.log
+import kotlin.test.assertEquals
 
 @Composable
 
-@Preview
-fun PieChart() {
+fun PieChart(
+    memorytotal: Double,
+    memoryAvailable: Double,
+    freePercentage: Double,
+    usedPercentage: Double
+) {
 
 
     MemoryAddTheme {
@@ -55,8 +61,7 @@ fun PieChart() {
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-                ,
+                    .height(200.dp),
 
 
                 colors = CardDefaults.cardColors(
@@ -71,10 +76,10 @@ fun PieChart() {
                 ) {
 
 
-                    Column (modifier = Modifier.align(Alignment.Center)) {
+                    Column(modifier = Modifier.align(Alignment.Center)) {
 
                         Text(
-                            text = stringResource(id = R.string.stadistics_text),
+                            text = stringResource(id = R.string.stadistics_total),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.secondary
                         )
@@ -85,31 +90,37 @@ fun PieChart() {
                         Row {
 
 
-
                             Spacer(Modifier.height(8.dp))
 
 
 
-                            var data by remember {
-                                mutableStateOf(
-                                    listOf(
-                                        Pie(label = "Dis", data =50.0, color = Color(0xFF5C6BC0), selectedColor = Color.Blue),
-                                        Pie(label = "Linux", data = 60.0, color = Color(0xFFEC407A), selectedColor = Color.Yellow),
-                                    )
+                            var data = listOf(
+                                Pie(
+                                    label = "free",
+                                    data = freePercentage,
+                                    color = Color(0xFF5C6BC0),
+                                    selectedColor = Color.Blue
+                                ),
+                                Pie(
+                                    label = "used",
+                                    data = usedPercentage,
+                                    color = Color(0xFFEC407A),
+                                    selectedColor = Color.Magenta
                                 )
-                            }
+                            )
 
-
-
+                            println("freePercentage: $freePercentage, usedPercentage: $usedPercentage")
 
                             PieChart(
                                 modifier = Modifier.size(150.dp),
                                 data = data,
+
                                 onPieClick = {
                                     println("${it.label} Clicked")
                                     val pieIndex = data.indexOf(it)
                                     data = data.mapIndexed { mapIndex, pie -> pie.copy(selected = pieIndex == mapIndex) }
                                 },
+
                                 selectedScale = 1.2f,
                                 scaleAnimEnterSpec = spring<Float>(
                                     dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -123,7 +134,6 @@ fun PieChart() {
                                 style = Pie.Style.Fill
                             )
 
-
                             Spacer(Modifier.widthIn(8.dp))
 
 
@@ -131,7 +141,7 @@ fun PieChart() {
 
 
                                 Text(
-                                    text = stringResource(id = R.string.memory_text),
+                                    text = stringResource(id = R.string.memory_total),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.secondary
 
@@ -140,7 +150,7 @@ fun PieChart() {
                                 Spacer(Modifier.height(8.dp))
 
                                 Text(
-                                    text = "1.5",
+                                    text = memorytotal.toString() + "GB",
                                     fontSize = 28.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = Color(0xFF5C6BC0)
@@ -150,7 +160,7 @@ fun PieChart() {
                                 Spacer(Modifier.height(8.dp))
 
                                 Text(
-                                    text = stringResource(id = R.string.memory_text),
+                                    text = stringResource(id = R.string.memory_valiable),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.secondary
 
@@ -159,7 +169,7 @@ fun PieChart() {
                                 Spacer(Modifier.height(8.dp))
 
                                 Text(
-                                    text = "2.G",
+                                    text = memoryAvailable.toString() + "MB",
                                     fontSize = 28.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = Color(0xFFEC407A)
@@ -171,16 +181,6 @@ fun PieChart() {
 
 
                         }
-
-
-
-
-
-
-
-
-
-
 
 
                     }

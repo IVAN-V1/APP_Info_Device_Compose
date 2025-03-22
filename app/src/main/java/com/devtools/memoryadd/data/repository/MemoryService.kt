@@ -2,43 +2,30 @@ package com.devtools.memoryadd.data.repository
 
 import android.app.ActivityManager
 import android.content.Context
-import android.content.Intent
-import android.os.IBinder
-import android.util.Log
-import androidx.core.app.ServiceCompat.START_STICKY
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class MemoryService {
 
+    suspend fun getRAMInfo(context: Context): Pair<Pair<Double, Double>, Pair<Double, Double>> {
 
-    fun getRAMInfo(context: Context, callback: (Pair<Double, Double>) -> Unit) {
-        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        return withContext(Dispatchers.IO) {
+            val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val memoryInfo = ActivityManager.MemoryInfo()
+            activityManager.getMemoryInfo(memoryInfo)
 
-        val runnable = object : Runnable {
-            override fun run() {
-                val activityManager =
-                    context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-                val memoryInfo = ActivityManager.MemoryInfo()
-                activityManager.getMemoryInfo(memoryInfo)
+            val totalRamGB = String.format("%.1f", memoryInfo.totalMem / (1024 * 1024 * 1024).toDouble()).toDouble()
+            val availableRam = String.format("%.1f", memoryInfo.availMem / (1024 * 1024).toDouble()).toDouble()
 
-                val totalRam = memoryInfo.totalMem / (1024 * 1024).toDouble() // Total RAM in MB
-                val availableRam =
-                    memoryInfo.availMem / (1024 * 1024).toDouble() // Available RAM in MB
+            val usedPercentage = String.format("%.2f", (availableRam / (totalRamGB * 1024)) * 100).toDouble()
+            val percentageFree = String.format("%.2f", 100.0 - usedPercentage).toDouble()
 
-                // Aquí puedes actualizar la UI o hacer algo con los valores obtenidos
-                Log.d("MemoryService", "RAM Total: $totalRam MB, RAM Disponible: $availableRam MB")
+            Pair(Pair(totalRamGB, availableRam), Pair(percentageFree, usedPercentage))
 
-                // Llama al callback con los valores actualizados
-                callback(Pair(totalRam, availableRam))
-
-                handler.postDelayed(this, 1000) // Repite cada segundo
-            }
         }
-        handler.post(runnable)
     }
-
-
-
-
-
-
 }
+
+
+

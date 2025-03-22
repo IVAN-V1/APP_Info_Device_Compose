@@ -9,30 +9,27 @@ import com.devtools.memoryadd.View.Home_View
 class NavigationWrapper {
 
 
-@Composable
-fun Navigation() {
 
+    /**
+     * `Navigation` es una función Composable que gestiona la navegación de la aplicación.
+     *
+     * Define el gráfico de navegación usando NavHost de Jetpack Compose. Actualmente, solo muestra la vista `Home_View` al iniciar.
+     *
+     * No requiere parámetros.
+     */
+    @Composable
+    fun Navigation() {
+        val NavController = rememberNavController()
 
-val NavController = rememberNavController()
+        NavHost(navController = NavController, startDestination = Home_Screen) {
 
+            composable<Home_Screen> {
 
-    NavHost(navController = NavController, startDestination = Initial_Page){
+                Home_View()
 
-        composable<Initial_Page> {
-
-          Home_View(
-
-          )
-
+            }
         }
-
-
     }
-
-
-}
-
-
 
 
 }

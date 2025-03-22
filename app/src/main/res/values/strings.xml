@@ -1,6 +1,24 @@
 <resources>
     <string name="app_name">memoryAdd</string>
-    <string name="memory_text">Memory in use</string>
-    <string name="stadistics_text">Stadistics</string>
+    <string name="memory_total">Memory total</string>
+    <string name="stadistics_total">Stadistics</string>
+    <string name="VersionAndroid">Version Android</string>
+    <string name="Brand">Brand</string>
+    <string name="Board">Board</string>
+    <string name="Manufactured">Manufactured</string>
+    <string name="memory_valiable">Memory Avaliable</string>
+    <string name="Host">Host</string>
+    <string name="codeName">Code Name</string>
+    <string name="INCREMENTAL">Incremental</string>
+    <string name="User">User</string>
+    <string name="Tags">Tags</string>
+    <string name="Type">Type</string>
+    <string name="Fingerprint">Fingerprint</string>
+    <string name="Serial">Serial</string>
+    <string name="Model">Model</string>
+    <string name="SecurityPatch">SecurityPatch</string>
+    <string name="SDK">SDK</string>
+    <string name="Release">Release</string>
+    <string name="Hardware">Hardware</string>
 
 </resources>

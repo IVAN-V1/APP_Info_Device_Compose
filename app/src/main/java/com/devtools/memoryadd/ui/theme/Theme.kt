@@ -1,6 +1,7 @@
 package com.devtools.memoryadd.ui.theme
 
 import android.os.Build
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -51,6 +52,7 @@ fun MemoryAddTheme(
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
+
     }
 
     MaterialTheme(
